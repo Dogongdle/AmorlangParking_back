@@ -37,6 +37,7 @@ public class AccountController {
 		webDataBinder.addValidators(signUpFormValidator);
 	}
 	
+	// 회원가입
 	@GetMapping("/sign-up")
 	@ResponseBody
 	public ResponseEntity<SignUpForm> signUpForm(SignUpForm signUpForm) {
@@ -45,7 +46,7 @@ public class AccountController {
 		
 		// ResponseEntity는 개발자가 직접 결과 데이터와 HTTP 상태 코드를 직접 제어할 수 있는 클래스로 
 		// 개발자는 404나 500같은 HTTP상태 코드를 전송하고 싶은 데이터와 함께 전송할수 있기 때문에 좀더 세밀한 제어가 필요한 경우 사용
-
+		// {"nickname":null,"email":null,"password":null,"passwordcheck":null}
 	}
 	
 	@PostMapping("/sign-up")
@@ -57,5 +58,6 @@ public class AccountController {
 		return new ResponseEntity<SignUpForm>(signUpForm,HttpStatus.OK);
 		
 		// 회원가입 이후, 자동 login
-	}	
+	}
+
 }

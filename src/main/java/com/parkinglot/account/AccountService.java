@@ -11,8 +11,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.parkinglot.config.PasswordConfig;
-
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -21,7 +19,20 @@ public class AccountService implements UserDetailsService{
 	
 	private final AccountRepository accountRepository;
 	private final PasswordEncoder passwordEncoder;
-	
+
+	public  Account makeNewSocial(SocialForm socialForm){
+		Account account=Account.builder()
+				.username(socialForm.getUsername())
+				.provider(socialForm.getProvider())
+				.service_id(socialForm.getService_id())
+				.build();
+
+		Account newAccount=accountRepository.save(account);
+		return newAccount;
+	}
+
+
+	// Basic 로그인
 	public Account makeNewAccount(SignUpForm signUpForm) {
 		Account account=Account.builder()
 				.email(signUpForm.getEmail())

@@ -9,9 +9,4 @@ import com.parkinglot.account.CurrentUser;
 @RestController
 public class MainController {
 
-	@GetMapping("/main")
-	public Account home(@CurrentUser Account account) {
-		
-		return account;
-	}
 }

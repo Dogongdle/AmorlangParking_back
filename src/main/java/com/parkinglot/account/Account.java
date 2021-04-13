@@ -16,18 +16,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Getter @Setter @EqualsAndHashCode(of="id")
+@Getter @Setter @EqualsAndHashCode(of="service_id")
 @Builder @AllArgsConstructor @NoArgsConstructor
 public class Account {
 	
 	@Id @GeneratedValue
-	private Long id;
+	private Long service_id;
 	
 	@Column(unique=true)
 	private String email;
 	
 	@Column(unique=true)
 	private String nickname;
+
+	private String username;
+
+	private String provider;
 	
 	private String password;
 	
