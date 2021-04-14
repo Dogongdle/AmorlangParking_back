@@ -74,8 +74,9 @@ public class JwtAuthenticationController {
     }
 
     @GetMapping("/user")
-    public UserApart showUser(@RequestHeader("token") String jwt) {
+    public UserApart showUser(@RequestHeader("Authorization") String jwt) {
         UserApart userApart = new UserApart();
+        jwt = jwt.substring(7);
         String username = this.jwtTokenUtil.getUsernameFromToken(jwt);
         if (this.userRepository.findByUsername(username).isPresent()) {
             Optional<User> user = this.userRepository.findByUsername(username);
