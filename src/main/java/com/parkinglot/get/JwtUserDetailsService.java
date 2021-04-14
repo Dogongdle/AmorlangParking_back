@@ -37,12 +37,6 @@ public class JwtUserDetailsService implements UserDetailsService {
                 .provider(infoDto.getProvider()).build()).getService_id();
     }
 
-    public Long saveToken(UserDto infoDto){
-
-        return userRepository.save(User.builder()
-                .token(infoDto.getToken()).build()).getService_id();
-    }
-
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

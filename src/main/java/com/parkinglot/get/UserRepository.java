@@ -9,7 +9,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     //Object findByService_id(String username);
 
-    boolean existsByToken(String token);
-
-    Object findByToken(String token);
 }

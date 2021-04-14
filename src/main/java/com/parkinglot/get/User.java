@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name="usertest")
+@Entity(name="users")
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
 public class User implements UserDetails {
@@ -32,16 +32,13 @@ public class User implements UserDetails {
     @Column(name = "provider")
     private String provider;
 
-    @Column(name = "token")
-    private String token;
+
 
     @Builder
-    public User(Long service_id, String username, String provider, String token){
+    public User(Long service_id, String username, String provider){
         this.service_id=service_id;
         this.username=username;
-        //this.password=password;
         this.provider=provider;
-        this.token=token;
     }
 
     // 사용자의 권한을 콜렉션 형태로 반환
