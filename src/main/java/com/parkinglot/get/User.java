@@ -16,7 +16,10 @@ import java.util.Set;
 public class User implements UserDetails {
 
     @Id
-    private Long service_id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    private Long serviceId;
 
     @Column(name = "username", unique = true)
     private String username;
@@ -34,8 +37,8 @@ public class User implements UserDetails {
 
 
     @Builder
-    public User(Long service_id, String username, String provider){
-        this.service_id=service_id;
+    public User(Long serviceId, String username, String provider){
+        this.serviceId=serviceId;
         this.username=username;
         this.provider=provider;
     }

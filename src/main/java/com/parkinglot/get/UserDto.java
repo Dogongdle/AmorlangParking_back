@@ -13,7 +13,7 @@ import javax.persistence.Column;
 @Builder
 public class UserDto {
 
-    private Long service_id;
+    private Long serviceId;
 
     @Column(unique = true)
     private String username;

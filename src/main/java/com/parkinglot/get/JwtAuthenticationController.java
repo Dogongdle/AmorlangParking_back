@@ -49,8 +49,8 @@ public class JwtAuthenticationController {
         /*
 
         try{
-            if(userRepository.existsById(infoDto.getService_id())){ // db에 있는 아이디인지 검사
-                infoDto.setService_id(infoDto.getService_id());
+            if(userRepository.existsById(infoDto.getserviceId())){ // db에 있는 아이디인지 검사
+                infoDto.setserviceId(infoDto.getserviceId());
                 infoDto.setUsername(infoDto.getUsername());
                 infoDto.setProvider(infoDto.getToken());
                 infoDto.setToken(token);

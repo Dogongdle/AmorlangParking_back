@@ -16,12 +16,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Getter @Setter @EqualsAndHashCode(of="service_id")
+@Getter @Setter @EqualsAndHashCode(of="serviceId")
 @Builder @AllArgsConstructor @NoArgsConstructor
 public class Account {
 	
 	@Id @GeneratedValue
-	private Long service_id;
+	private Long serviceId;
 	
 	@Column(unique=true)
 	private String email;

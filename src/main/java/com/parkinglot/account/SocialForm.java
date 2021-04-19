@@ -13,11 +13,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Data
-@EqualsAndHashCode(of="service_id")
+@EqualsAndHashCode(of="serviceId")
 public class SocialForm {
 
     @Id @GeneratedValue
-    private Long service_id;
+    private Long serviceId;
 
     @NotBlank
     @Length(min=5, max=20)

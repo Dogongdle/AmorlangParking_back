@@ -24,7 +24,7 @@ public class AccountService implements UserDetailsService{
 		Account account=Account.builder()
 				.username(socialForm.getUsername())
 				.provider(socialForm.getProvider())
-				.service_id(socialForm.getService_id())
+				.serviceId(socialForm.getServiceId())
 				.build();
 
 		Account newAccount=accountRepository.save(account);

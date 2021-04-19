@@ -16,7 +16,7 @@ public class JwtRequest implements Serializable {
 
     private static final long serialVersionUID = 5926468583005150707L;
 
-    private Long service_id;
+    private Long serviceId;
     private String username;
     private String provider;
     private String token;

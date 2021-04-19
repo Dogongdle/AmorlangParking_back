@@ -13,7 +13,7 @@ public class UserService {
 
     private User saveNewUser(UserDto userDto){
         User user=User.builder()
-                .service_id(userDto.getService_id())
+                .serviceId(userDto.getServiceId())
                 .username(userDto.getUsername())
                 .provider(userDto.getProvider())
                 .build();
