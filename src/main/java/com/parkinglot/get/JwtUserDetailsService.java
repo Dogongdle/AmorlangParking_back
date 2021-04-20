@@ -16,9 +16,7 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class JwtUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-
+    private final JwtTokenUtil jwtTokenUtil;
     private final UserRepository userRepository;
 
     // infoDto 회원정보가 들어있는 dto
@@ -35,6 +33,12 @@ public class JwtUserDetailsService implements UserDetailsService {
                 //.password(infoDto.getPassword())
                 .username(infoDto.getUsername())
                 .provider(infoDto.getProvider()).build()).getServiceId();
+    }
+
+    @Transactional
+    public Long save(User user){
+        userRepository.save(user);
+        return user.getServiceId();
     }
 
 

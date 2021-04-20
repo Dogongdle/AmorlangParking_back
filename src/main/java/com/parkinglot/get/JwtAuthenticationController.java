@@ -24,17 +24,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class JwtAuthenticationController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-
-    @Autowired
-    private JwtUserDetailsService userDetailsService;
-
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenUtil jwtTokenUtil;
+    private final JwtUserDetailsService userDetailsService;
     private final UserRepository userRepository;
-
     private final JwtUserDetailsService userService;
 
 
@@ -77,14 +70,33 @@ public class JwtAuthenticationController {
     public UserApart showUser(@RequestHeader("Authorization") String jwt) {
         UserApart userApart = new UserApart();
         jwt = jwt.substring(7);
-        String username = this.jwtTokenUtil.getUsernameFromToken(jwt);
-        if (this.userRepository.findByUsername(username).isPresent()) {
-            Optional<User> user = this.userRepository.findByUsername(username);
+        String username = jwtTokenUtil.getUsernameFromToken(jwt);
+        if (userRepository.findByUsername(username).isPresent()) {
+            Optional<User> user = userRepository.findByUsername(username);
             userApart.setUsername(username);
             userApart.setApart(((User)user.get()).getApart());
         }
 
         return userApart;
+    }
+
+    @PostMapping("/user")
+    public void saveUser(@RequestHeader("Authorization")String jwt, @RequestBody UserApart userApart){
+
+        jwt = jwt.substring(7);
+        String username = jwtTokenUtil.getUsernameFromToken(jwt);
+        Optional<User> opUser = userRepository.findByUsername(username);
+        User findUser = opUser.get();
+        User updateUser = new User();
+
+        updateUser.setId(findUser.getId());
+        updateUser.setUsername(findUser.getUsername());
+        updateUser.setServiceId(findUser.getServiceId());
+        updateUser.setProvider(findUser.getProvider());
+        updateUser.setApart(userApart.getApart());
+
+        userService.save(updateUser);
+
     }
 
     //final String token = getString(jwtRequest); // 토큰 받기

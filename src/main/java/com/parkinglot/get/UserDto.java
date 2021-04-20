@@ -22,5 +22,7 @@ public class UserDto {
 
     private String provider;
 
+    private String apart;
+
     private String token;
 }
