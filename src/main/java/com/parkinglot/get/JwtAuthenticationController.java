@@ -80,7 +80,7 @@ public class JwtAuthenticationController {
         return userApart;
     }
 
-    @PostMapping("/user")
+    @PostMapping(value = "/user")
     public void saveUser(@RequestHeader("Authorization")String jwt, @RequestBody UserApart userApart){
 
         jwt = jwt.substring(7);
