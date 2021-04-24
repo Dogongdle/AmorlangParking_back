@@ -1,4 +1,4 @@
-package com.parkinglot.get;
+package com.parkinglot.token;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-
-import javax.servlet.http.HttpServletRequest;
 
 // 토큰 관련 설정을 담당하는 클래스
 // 토큰을 발급해주고, 자격증명을 관리

@@ -1,4 +1,4 @@
-package com.parkinglot.get;
+package com.parkinglot.user;
 
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;

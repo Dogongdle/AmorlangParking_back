@@ -1,6 +1,5 @@
-package com.parkinglot.get;
+package com.parkinglot.user;
 
-import com.parkinglot.profile.Profile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +17,5 @@ public class UserService {
         User newUser=userRepository.save(user);
         return newUser;
     }
-
-
 
 }

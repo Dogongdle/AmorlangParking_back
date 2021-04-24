@@ -1,4 +1,4 @@
-package com.parkinglot.get;
+package com.parkinglot.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,7 +1,7 @@
 package com.parkinglot.config;
 
-import com.parkinglot.get.JwtAuthenticationEntryPoint;
-import com.parkinglot.get.JwtRequestFilter;
+import com.parkinglot.token.JwtAuthenticationEntryPoint;
+import com.parkinglot.token.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

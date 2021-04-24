@@ -1,6 +1,9 @@
-package com.parkinglot.get;
+package com.parkinglot.token;
 
-import com.parkinglot.profile.Profile;
+import com.parkinglot.user.User;
+import com.parkinglot.user.UserApart;
+import com.parkinglot.user.UserRepository;
+import com.parkinglot.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

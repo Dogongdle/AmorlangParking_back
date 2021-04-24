@@ -1,4 +1,4 @@
-package com.parkinglot.get;
+package com.parkinglot.token;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package com.parkinglot.get;
+package com.parkinglot.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,9 +9,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApartCode {
+public class Parking {
 
-    private String apart;
+    private int parkingSeat;
 
-    private String code;
+    private boolean enable;
+
 }

@@ -1,20 +1,17 @@
-package com.parkinglot.get;
+package com.parkinglot.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Parking {
+public class ApartCode {
 
-    private int parkingSeat;
+    private String apart;
 
-    private boolean enable;
-
+    private String code;
 }

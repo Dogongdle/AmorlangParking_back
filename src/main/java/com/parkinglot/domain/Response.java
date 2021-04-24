@@ -1,4 +1,4 @@
-package com.parkinglot.get;
+package com.parkinglot.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

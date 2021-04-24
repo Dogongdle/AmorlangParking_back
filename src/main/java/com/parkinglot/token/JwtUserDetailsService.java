@@ -1,5 +1,8 @@
-package com.parkinglot.get;
+package com.parkinglot.token;
 
+import com.parkinglot.user.User;
+import com.parkinglot.user.UserDto;
+import com.parkinglot.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,8 +29,6 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     @Transactional
     public Long save(UserDto infoDto) {
-        //BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        //infoDto.setPassword(encoder.encode(infoDto.getPassword()));
 
         return userRepository.save(User.builder()
                 .serviceId(infoDto.getServiceId())
