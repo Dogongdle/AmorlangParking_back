@@ -17,7 +17,9 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long service_id;
+    private Long id;
+
+    private Long serviceId;
 
     @Column(name = "username", unique = true)
     private String username;
@@ -25,6 +27,12 @@ public class User implements UserDetails {
     private String email;
 
     private String apart;
+
+    //private String phoneNumber;
+
+    //private String carNumber;
+
+    //private String bio;
 
     @Column(name = "password")
     private String password;
@@ -35,8 +43,8 @@ public class User implements UserDetails {
 
 
     @Builder
-    public User(Long service_id, String username, String provider){
-        this.service_id=service_id;
+    public User(Long serviceId, String username, String provider){
+        this.serviceId=serviceId;
         this.username=username;
         this.provider=provider;
     }

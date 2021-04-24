@@ -1,5 +1,6 @@
 package com.parkinglot.get;
 
+import com.parkinglot.profile.Profile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,15 +12,13 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    private User saveNewUser(UserDto userDto){
-        User user=User.builder()
-                .service_id(userDto.getService_id())
-                .username(userDto.getUsername())
-                .provider(userDto.getProvider())
-                .build();
-
+    private User saveNewUser(User user,UserDto userDto){
+        user.setUsername(userDto.getUsername());
+        user.setApart(userDto.getApart());
         User newUser=userRepository.save(user);
         return newUser;
     }
+
+
 
 }

@@ -30,11 +30,11 @@ public class JwtUserDetailsService implements UserDetailsService {
         //infoDto.setPassword(encoder.encode(infoDto.getPassword()));
 
         return userRepository.save(User.builder()
-                .service_id(infoDto.getService_id())
+                .serviceId(infoDto.getServiceId())
                 //.token(infoDto.getToken())
                 //.password(infoDto.getPassword())
                 .username(infoDto.getUsername())
-                .provider(infoDto.getProvider()).build()).getService_id();
+                .provider(infoDto.getProvider()).build()).getServiceId();
     }
 
 
