@@ -61,7 +61,7 @@ public class UserController {
             else parking.setEnable(false);
             list.add(parking);
         }
-        return new ResponseEntity<>(list, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @GetMapping("/data/b_sector")
@@ -74,7 +74,7 @@ public class UserController {
             else parking.setEnable(false);
             list.add(parking);
         }
-        return new ResponseEntity<>(list, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @GetMapping("/data/c_sector")
@@ -87,7 +87,7 @@ public class UserController {
             else parking.setEnable(false);
             list.add(parking);
         }
-        return new ResponseEntity<>(list, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @GetMapping("/data/d_sector")
@@ -100,7 +100,7 @@ public class UserController {
             else parking.setEnable(false);
             list.add(parking);
         }
-        return new ResponseEntity<>(list, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @PostMapping("/verify")
