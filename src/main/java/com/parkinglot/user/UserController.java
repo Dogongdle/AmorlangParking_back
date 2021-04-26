@@ -1,6 +1,7 @@
 package com.parkinglot.user;
 
 import com.parkinglot.domain.ApartCode;
+import com.parkinglot.domain.ParkingDto;
 import com.parkinglot.token.JwtUserDetailsService;
 import com.parkinglot.domain.Parking;
 import com.parkinglot.domain.Response;
@@ -52,55 +53,55 @@ public class UserController {
     }
 
     @GetMapping("/data/a_sector")
-    public ResponseEntity<List<Parking>> generateDataA(){
-        List<Parking> list=new ArrayList<>();
+    public ResponseEntity<List<ParkingDto>> generateDataA(){
+        List<ParkingDto> list=new ArrayList<>();
         for(int i=1;i<16;i++){
-            Parking parking=new Parking();
+            ParkingDto parking=new ParkingDto();
             parking.setParkingSeat(i);
             if (i%3==0) parking.setEnable(true);
             else parking.setEnable(false);
             list.add(parking);
         }
-        return new ResponseEntity<>(list, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @GetMapping("/data/b_sector")
-    public ResponseEntity<List<Parking>> generateDataB(){
-        List<Parking> list=new ArrayList<>();
+    public ResponseEntity<List<ParkingDto>> generateDataB(){
+        List<ParkingDto> list=new ArrayList<>();
         for(int i=1;i<16;i++){
-            Parking parking=new Parking();
+            ParkingDto parking=new ParkingDto();
             parking.setParkingSeat(i);
             if (i%4==0) parking.setEnable(true);
             else parking.setEnable(false);
             list.add(parking);
         }
-        return new ResponseEntity<>(list, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @GetMapping("/data/c_sector")
-    public ResponseEntity<List<Parking>> generateDataC(){
-        List<Parking> list=new ArrayList<>();
+    public ResponseEntity<List<ParkingDto>> generateDataC(){
+        List<ParkingDto> list=new ArrayList<>();
         for(int i=1;i<16;i++){
-            Parking parking=new Parking();
+            ParkingDto parking=new ParkingDto();
             parking.setParkingSeat(i);
             if (i%5==0) parking.setEnable(true);
             else parking.setEnable(false);
             list.add(parking);
         }
-        return new ResponseEntity<>(list, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @GetMapping("/data/d_sector")
-    public ResponseEntity<List<Parking>> generateDataD(){
-        List<Parking> list=new ArrayList<>();
+    public ResponseEntity<List<ParkingDto>> generateDataD(){
+        List<ParkingDto> list=new ArrayList<>();
         for(int i=1;i<16;i++){
-            Parking parking=new Parking();
+            ParkingDto parking=new ParkingDto();
             parking.setParkingSeat(i);
             if (i%6==0) parking.setEnable(true);
             else parking.setEnable(false);
             list.add(parking);
         }
-        return new ResponseEntity<>(list, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @PostMapping("/verify")

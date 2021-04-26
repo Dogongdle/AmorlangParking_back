@@ -24,15 +24,16 @@ public class User implements UserDetails {
     @Column(name = "username", unique = true)
     private String username;
 
+    @Column(name = "email", unique = true)
     private String email;
 
     private String apart;
 
-    //private String phoneNumber;
+    private String phoneNumber;
 
-    //private String carNumber;
+    private String carNumber;
 
-    //private String bio;
+    private String bio;
 
     @Column(name = "password")
     private String password;
