@@ -1,8 +1,9 @@
-package com.parkinglot.token;
+package com.parkinglot.service;
 
-import com.parkinglot.user.User;
-import com.parkinglot.user.UserDto;
-import com.parkinglot.user.UserRepository;
+import com.parkinglot.domain.User;
+import com.parkinglot.dto.UserDto;
+import com.parkinglot.token.JwtTokenUtil;
+import com.parkinglot.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,9 +20,7 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class JwtUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-
+    private final JwtTokenUtil jwtTokenUtil;
     private final UserRepository userRepository;
 
     // infoDto 회원정보가 들어있는 dto

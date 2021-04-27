@@ -1,9 +1,13 @@
-package com.parkinglot.token;
+package com.parkinglot.controller;
 
-import com.parkinglot.user.User;
-import com.parkinglot.user.UserApart;
-import com.parkinglot.user.UserRepository;
-import com.parkinglot.user.UserService;
+import com.parkinglot.domain.User;
+import com.parkinglot.dto.UserApart;
+import com.parkinglot.token.JwtRequest;
+import com.parkinglot.token.JwtResponse;
+import com.parkinglot.token.JwtTokenUtil;
+import com.parkinglot.service.JwtUserDetailsService;
+import com.parkinglot.repository.UserRepository;
+import com.parkinglot.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,49 +27,22 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class JwtAuthenticationController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-
-    @Autowired
-    private JwtUserDetailsService userDetailsService;
-
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenUtil jwtTokenUtil;
+    private final JwtUserDetailsService userDetailsService;
     private final UserRepository userRepository;
-
-    private final UserService userService;
-
-    private final JwtUserDetailsService jwtUserDetailsService;
-
 
 
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest jwtRequest) throws Exception {
 
-        //authenticate(jwtRequest.getUsername(),jwtRequest.getPassword());
-
         final String token = getString(jwtRequest);
 
-        /*
-
-        try{
-            if(userRepository.existsById(infoDto.getService_id())){ // db에 있는 아이디인지 검사
-                infoDto.setService_id(infoDto.getService_id());
-                infoDto.setUsername(infoDto.getUsername());
-                infoDto.setProvider(infoDto.getToken());
-                infoDto.setToken(token);
-                userService.saveToken(infoDto);
-            }
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-         */
-
         return ResponseEntity.ok(new JwtResponse(token));
+
     }
 
+    //JWT 토큰 생성 메서드
     private String getString(JwtRequest jwtRequest) {
         final UserDetails userDetails = userDetailsService
                 .loadUserByUsername(jwtRequest.getUsername());
@@ -105,35 +82,7 @@ public class JwtAuthenticationController {
         user.setProvider(opUser.get().getProvider());
         user.setApart(userApart.getApart());
         userRepository.save(user);
-
-//        userRepository.save(user);
-//        profile.setApart(userApart);
-//        profile.setPhoneNumber(opUser.get().getPhoneNumber());
-//        profile.setCarNumber(opUser.get().getCarNumber());
-//        profile.setEmail(opUser.get().getEmail());
-//        profile.setBio(opUser.get().getBio());
-
     }
-
-
-    /*
-    @PostMapping("/user")
-    public User showUserForm(@RequestHeader("authorization") String jwt, User user,
-                             Profile profile, @RequestBody String apart){
-
-        jwt = jwt.substring(7);
-        String username = this.jwtTokenUtil.getUsernameFromToken(jwt);
-        if (this.userRepository.findByUsername(username).isPresent()) {
-            Optional<User> users = this.userRepository.findByUsername(username); // 사용자 정보
-            users.get().setApart(apart);    // 아파트 정보 입력
-            // builder로써 가져와야 하나?
-            userService.updateProfile(user,profile);
-        }
-
-        return user;
-    }
-     */
-
 
     private void authenticate(String username,String password) throws Exception {
         try {
