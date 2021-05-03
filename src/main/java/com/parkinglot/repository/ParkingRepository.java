@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-@Transactional(readOnly = true)
+//@Transactional(readOnly = true)
 public interface ParkingRepository extends JpaRepository<Parking, Long> {
     Optional<Parking> findBySector(String sector);
 }

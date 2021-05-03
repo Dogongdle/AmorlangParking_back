@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class ParkingService {
 
