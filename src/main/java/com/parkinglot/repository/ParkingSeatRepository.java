@@ -32,4 +32,23 @@ public class ParkingSeatRepository {
         ParkingSeat parkingSeat = repository.get(parkingId);
         return parkingSeat.getSeat();
     }
+
+    public void saveDoubleSeat(Long parkingId, int seatNumber, boolean bool){
+        ParkingSeat parkingSeat = repository.get(parkingId);
+        Map<Integer, Boolean> doubleSeat = parkingSeat.getDoubleSeat();
+        doubleSeat.put(seatNumber, bool);
+    }
+
+    public boolean updateDoubleSeat(Long parkingId, int seatNumber){
+        ParkingSeat parkingSeat = repository.get(parkingId);
+        Map<Integer, Boolean> doubleSeat = parkingSeat.getDoubleSeat();
+        doubleSeat.put(seatNumber, !doubleSeat.get(seatNumber));
+        return doubleSeat.get(seatNumber);
+    }
+
+    public Map<Integer, Boolean> getDoubleSeats(Long parkingId){
+        ParkingSeat parkingSeat = repository.get(parkingId);
+        return parkingSeat.getDoubleSeat();
+    }
+
 }

@@ -23,57 +23,6 @@ public class ParkingController {
     private final ParkingRepository parkingRepository;
     private final ParkingSeatRepository parkingSeatRepository;
 
-/*    @GetMapping("/data/a")
-    public ResponseEntity<List<ParkingDto>> generateDataA(){
-        List<ParkingDto> list=new ArrayList<>();
-        for(int i=1;i<16;i++){
-            ParkingDto parking=new ParkingDto();
-            parking.setParkingSeat(i);
-            if (i%3==0) parking.setEnable(true);
-            else parking.setEnable(false);
-            list.add(parking);
-        }
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
-
-    @GetMapping("/data/b")
-    public ResponseEntity<List<ParkingDto>> generateDataB(){
-        List<ParkingDto> list=new ArrayList<>();
-        for(int i=1;i<16;i++){
-            ParkingDto parking=new ParkingDto();
-            parking.setParkingSeat(i);
-            if (i%4==0) parking.setEnable(true);
-            else parking.setEnable(false);
-            list.add(parking);
-        }
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
-
-    @GetMapping("/data/c")
-    public ResponseEntity<List<ParkingDto>> generateDataC(){
-        List<ParkingDto> list=new ArrayList<>();
-        for(int i=1;i<16;i++){
-            ParkingDto parking=new ParkingDto();
-            parking.setParkingSeat(i);
-            if (i%5==0) parking.setEnable(true);
-            else parking.setEnable(false);
-            list.add(parking);
-        }
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
-
-    @GetMapping("/data/d")
-    public ResponseEntity<List<ParkingDto>> generateDataD(){
-        List<ParkingDto> list=new ArrayList<>();
-        for(int i=1;i<16;i++){
-            ParkingDto parking=new ParkingDto();
-            parking.setParkingSeat(i);
-            if (i%6==0) parking.setEnable(true);
-            else parking.setEnable(false);
-            list.add(parking);
-        }
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }*/
 
     @GetMapping("/data/{sector}")
     public List<ParkingDto> showSeats(@PathVariable String sector){
@@ -102,4 +51,34 @@ public class ParkingController {
 
         return parkingDto;
     }
+
+    @GetMapping("/data/{sector}/double")
+    public List<ParkingDto> showDoubleSeats(@PathVariable String sector){
+        Parking parking = parkingRepository.findBySector(sector).get();
+        Map<Integer, Boolean> seats = parkingSeatRepository.getDoubleSeats(parking.getId());
+
+        List<ParkingDto> list = new ArrayList<>();
+        for (Integer seatNumber : seats.keySet()) {
+            ParkingDto parkingDto = new ParkingDto();
+            parkingDto.setParkingSeat(seatNumber);
+            parkingDto.setEnable(seats.get(seatNumber));
+            list.add(parkingDto);
+        }
+
+        return list;
+    }
+
+    @PostMapping("/data/{sector}/double/{seat}")
+    public ParkingDto preserveDoubleSeat(@PathVariable String sector, @PathVariable int seat){
+        Parking parking = parkingRepository.findBySector(sector).get();
+        boolean enable = parkingSeatRepository.updateDoubleSeat(parking.getId(), seat);
+
+        ParkingDto parkingDto = new ParkingDto();
+        parkingDto.setParkingSeat(seat);
+        parkingDto.setEnable(enable);
+
+        return parkingDto;
+    }
+
+
 }

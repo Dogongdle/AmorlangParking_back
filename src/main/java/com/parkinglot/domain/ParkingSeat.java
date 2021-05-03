@@ -10,4 +10,5 @@ import java.util.Map;
 public class ParkingSeat {
     //자리 번호와 자리가 차있는지 여부
     private Map<Integer, Boolean> seat = new HashMap<>();
+    private Map<Integer, Boolean> doubleSeat = new HashMap<>();
 }

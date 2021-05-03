@@ -59,7 +59,8 @@ public class JwtAuthenticationController {
         if (this.userRepository.findByUsername(username).isPresent()) {
             Optional<User> user = this.userRepository.findByUsername(username);
             userApart.setUsername(username);
-            userApart.setApart(((User)user.get()).getApart());
+            userApart.setApart(user.get().getApart());
+            userApart.setProvider(user.get().getProvider());
         }
 
         return userApart;

@@ -3,14 +3,12 @@ package com.parkinglot;
 import com.parkinglot.domain.Parking;
 import com.parkinglot.repository.ParkingRepository;
 import com.parkinglot.repository.ParkingSeatRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -38,7 +36,25 @@ public class ParkingLotApplication {
 			parkingSeatRepository.generateSeat(j);
 			for (int i = 1; i < 16; i++) {
 				parkingSeatRepository.saveSeat(j,i,true);
+
 			}
+			for (int i = 1; i < 6; i++) {
+
+				parkingSeatRepository.saveDoubleSeat(j,i,true);
+			}
+			parkingSeatRepository.updateSeat(j,1);
+			parkingSeatRepository.updateSeat(j,2);
+			parkingSeatRepository.updateSeat(j,3);
+			parkingSeatRepository.updateSeat(j,7);
+			parkingSeatRepository.updateSeat(j,9);
+			parkingSeatRepository.updateSeat(j,12);
+			parkingSeatRepository.updateSeat(j,13);
+			parkingSeatRepository.updateSeat(j,15);
+
+			parkingSeatRepository.updateDoubleSeat(j,1);
+			parkingSeatRepository.updateDoubleSeat(j,2);
+			parkingSeatRepository.updateDoubleSeat(j,3);
+
 		}
 	}
 

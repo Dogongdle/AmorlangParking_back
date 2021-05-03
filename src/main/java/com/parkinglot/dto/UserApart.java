@@ -8,4 +8,5 @@ public class UserApart {
 
     private String username;
     private String apart;
+    private String provider;
 }
