@@ -1,13 +1,13 @@
-package com.parkinglot.repository;
+package com.parkinglot.service;
 
 import com.parkinglot.domain.ParkingSeat;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Repository
-public class ParkingSeatRepository {
+@Service
+public class ParkingService {
 
     private final Map<Long, ParkingSeat> repository = new HashMap<>();
 
