@@ -1,8 +1,9 @@
-package com.parkinglot.get;
+package com.parkinglot.token;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import lombok.Builder;
+import com.parkinglot.user.User;
+import com.parkinglot.user.UserApart;
+import com.parkinglot.user.UserRepository;
+import com.parkinglot.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +14,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
 //JwtRequest를 Json 형식으로 받아 인증을 통해 토큰 발급
@@ -35,7 +34,9 @@ public class JwtAuthenticationController {
 
     private final UserRepository userRepository;
 
-    private final JwtUserDetailsService userService;
+    private final UserService userService;
+
+    private final JwtUserDetailsService jwtUserDetailsService;
 
 
 
@@ -74,8 +75,9 @@ public class JwtAuthenticationController {
     }
 
     @GetMapping("/user")
-    public UserApart showUser(@RequestHeader("token") String jwt) {
+    public UserApart showUser(@RequestHeader("authorization") String jwt) {
         UserApart userApart = new UserApart();
+        jwt = jwt.substring(7);
         String username = this.jwtTokenUtil.getUsernameFromToken(jwt);
         if (this.userRepository.findByUsername(username).isPresent()) {
             Optional<User> user = this.userRepository.findByUsername(username);
@@ -86,17 +88,52 @@ public class JwtAuthenticationController {
         return userApart;
     }
 
-    //final String token = getString(jwtRequest); // 토큰 받기
+    @PostMapping("/user")
+    public void saveUser(@RequestHeader("authorization") String jwt,
+                         @RequestBody UserApart userApart){
 
-        /*
-        final String token = getString(jwtRequest); // 토큰 받기
-        String username=jwtTokenUtil.getUsernameFromToken(token);
-        
-        if(userRepository.findByUsername(username).equals(user.getUsername())){
-            userApart.setUsername(user.getUsername());
-            userApart.setApart(userApart.getApart());
+        User user=new User();
+
+        jwt = jwt.substring(7);
+        String username = this.jwtTokenUtil.getUsernameFromToken(jwt);
+
+        Optional<User> opUser = this.userRepository.findByUsername(username); // 사용자 정보
+
+        user.setId(opUser.get().getId());
+        user.setUsername(opUser.get().getUsername());
+        user.setServiceId(opUser.get().getServiceId());
+        user.setProvider(opUser.get().getProvider());
+        user.setApart(userApart.getApart());
+        userRepository.save(user);
+
+//        userRepository.save(user);
+//        profile.setApart(userApart);
+//        profile.setPhoneNumber(opUser.get().getPhoneNumber());
+//        profile.setCarNumber(opUser.get().getCarNumber());
+//        profile.setEmail(opUser.get().getEmail());
+//        profile.setBio(opUser.get().getBio());
+
+    }
+
+
+    /*
+    @PostMapping("/user")
+    public User showUserForm(@RequestHeader("authorization") String jwt, User user,
+                             Profile profile, @RequestBody String apart){
+
+        jwt = jwt.substring(7);
+        String username = this.jwtTokenUtil.getUsernameFromToken(jwt);
+        if (this.userRepository.findByUsername(username).isPresent()) {
+            Optional<User> users = this.userRepository.findByUsername(username); // 사용자 정보
+            users.get().setApart(apart);    // 아파트 정보 입력
+            // builder로써 가져와야 하나?
+            userService.updateProfile(user,profile);
         }
-         */
+
+        return user;
+    }
+     */
+
 
     private void authenticate(String username,String password) throws Exception {
         try {

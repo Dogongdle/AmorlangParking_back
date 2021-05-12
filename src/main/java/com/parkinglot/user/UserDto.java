@@ -1,8 +1,6 @@
-package com.parkinglot.get;
+package com.parkinglot.user;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Column;
 
@@ -11,9 +9,11 @@ import javax.persistence.Column;
 @Getter
 @Setter
 @Builder
+@Data
+@EqualsAndHashCode @NoArgsConstructor @AllArgsConstructor
 public class UserDto {
 
-    private Long service_id;
+    private Long serviceId;
 
     @Column(unique = true)
     private String username;
@@ -22,5 +22,9 @@ public class UserDto {
 
     private String provider;
 
+    private String apart;
+
     private String token;
+
+
 }
