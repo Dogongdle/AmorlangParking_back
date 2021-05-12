@@ -1,4 +1,4 @@
-package com.parkinglot.user;
+package com.parkinglot.dto;
 
 import lombok.*;
 

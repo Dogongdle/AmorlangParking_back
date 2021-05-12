@@ -1,4 +1,4 @@
-package com.parkinglot.domain;
+package com.parkinglot.dto;
 
 import lombok.Data;
 

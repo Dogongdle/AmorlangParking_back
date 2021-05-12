@@ -6,24 +6,23 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name="parking")
+@Entity(name="aparts")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Parking {
+public class Apart {
 
     @Id @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name = "parking_id")
+    @Column(name = "apart_id")
     private Long id;
 
-/*    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "apart_id")
-    private Apart apart;*/
+    private String name;
+    private String code;
 
-    private String sector;
-
-
+//    @OneToMany(mappedBy = "apart", cascade = CascadeType.ALL)
+//    private List<Parking> parkings = new ArrayList<>();
 }

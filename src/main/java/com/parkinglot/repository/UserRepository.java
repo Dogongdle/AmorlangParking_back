@@ -1,5 +1,6 @@
-package com.parkinglot.user;
+package com.parkinglot.repository;
 
+import com.parkinglot.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

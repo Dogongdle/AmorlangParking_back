@@ -1,4 +1,4 @@
-package com.parkinglot.user;
+package com.parkinglot.domain;
 
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,8 +15,8 @@ import java.util.Set;
 @NoArgsConstructor @AllArgsConstructor
 public class User implements UserDetails {
 
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @Id @GeneratedValue(strategy= GenerationType.AUTO)
+    @Column(name = "user_id")
     private Long id;
 
     private Long serviceId;
