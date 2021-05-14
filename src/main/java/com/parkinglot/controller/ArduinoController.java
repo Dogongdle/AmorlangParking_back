@@ -37,8 +37,16 @@ public class ArduinoController {
         boolean enable = Boolean.parseBoolean(info.get("enable").toString()); // 주차 가능여부
 
         // 기존의 데이터와 연동
+
+        // parking = parkingRepository.findBySector(sector).get();
+        // enable = parkingService.updateSeat(parking.getId(), number);
         parking = parkingRepository.findBySector(sector).get();
-        enable = parkingService.updateSeat(parking.getId(), number);
+        if(enable==true) {
+            enable = parkingService.updateArduinoSeatTrue(parking.getId(), number);
+        }
+        else if(enable==false){
+            enable=parkingService.updateArduinoSeatFalse(parking.getId(), number);
+        }
 
         parkingDto=new ParkingDto();
         parkingDto.setParkingSeat(number);
