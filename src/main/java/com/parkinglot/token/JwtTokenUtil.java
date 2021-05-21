@@ -21,7 +21,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class JwtTokenUtil implements Serializable {
 
     private static final long serialVersionUID = -2550185165626007488L;
-    //토큰 만료시간. 초단위로 설정한다 24 * 60 * 60 = 60초 * 60분 * 24시간 = 24시간
+    //토큰 만료시간. 초단위로 설정한다 150 * 24 * 60 * 60 = 60초 * 60분 * 24시간 * 150일 = 150일
     public static final long JWT_TOKEN_VALIDITY = 150 * 24 * 60 * 60;
 
     @Value("${spring.jwt.secret}")

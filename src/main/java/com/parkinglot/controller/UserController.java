@@ -24,11 +24,11 @@ public class UserController {
     public UserApart showUser(@RequestHeader("authorization") String jwt) {
         UserApart userApart = new UserApart();
         jwt = jwt.substring(7);
-        String username = this.jwtTokenUtil.getUsernameFromToken(jwt);
-        if (this.userRepository.findByUsername(username).isPresent()) {
-            Optional<User> user = this.userRepository.findByUsername(username);
+        String username = jwtTokenUtil.getUsernameFromToken(jwt);
+        if (userRepository.findByUsername(username).isPresent()) {
+            Optional<User> user = userRepository.findByUsername(username);
             userApart.setUsername(username);
-            userApart.setApart((user.get()).getApart());
+            userApart.setApart(user.get().getApart());
             userApart.setProvider(user.get().getProvider());
         }
 
@@ -44,12 +44,14 @@ public class UserController {
         jwt = jwt.substring(7);
         String username = this.jwtTokenUtil.getUsernameFromToken(jwt);
 
-        Optional<User> opUser = this.userRepository.findByUsername(username); // 사용자 정보
+        Optional<User> opUser = userRepository.findByUsername(username); // 사용자 정보
 
         user.setId(opUser.get().getId());
         user.setUsername(opUser.get().getUsername());
         user.setServiceId(opUser.get().getServiceId());
         user.setProvider(opUser.get().getProvider());
+        user.setDeviceToken(opUser.get().getDeviceToken());
+        user.setPlatform(opUser.get().getPlatform());
         user.setApart(userApart.getApart());
         userRepository.save(user);
     }

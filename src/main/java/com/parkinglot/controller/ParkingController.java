@@ -20,7 +20,6 @@ public class ParkingController {
 
     private final ParkingService parkingService;
     private final ParkingRepository parkingRepository;
-    //private final ParkingSeatRepository parkingSeatRepository;
 
     // a~d 섹터별 데이터 추가
     @GetMapping("/data/{sector}")

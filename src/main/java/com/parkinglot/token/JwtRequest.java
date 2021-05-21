@@ -1,5 +1,6 @@
 package com.parkinglot.token;
 
+import com.parkinglot.domain.Platform;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,5 +21,6 @@ public class JwtRequest implements Serializable {
     private String username;
     private String provider;
     private String token;
-    //private String password;
+    private String deviceToken;
+    private Platform platform;
 }

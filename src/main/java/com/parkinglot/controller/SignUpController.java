@@ -1,6 +1,7 @@
 package com.parkinglot.controller;
 
 import com.parkinglot.domain.Response;
+import com.parkinglot.domain.User;
 import com.parkinglot.dto.UserDto;
 import com.parkinglot.repository.UserRepository;
 import com.parkinglot.service.JwtUserDetailsService;
@@ -45,6 +46,10 @@ public class SignUpController {
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest jwtRequest) throws Exception {
 
         final String token = getString(jwtRequest);
+        User user = userRepository.findByUsername(jwtRequest.getUsername()).get();
+        user.setDeviceToken(jwtRequest.getDeviceToken());
+        user.setPlatform(jwtRequest.getPlatform());
+        userRepository.save(user);
 
         return ResponseEntity.ok(new JwtResponse(token));
 
