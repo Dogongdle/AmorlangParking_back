@@ -10,6 +10,7 @@ import com.parkinglot.repository.UserRepository;
 import com.parkinglot.service.PushService;
 import com.parkinglot.token.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class PushController {
 
     private final UserRepository userRepository;
@@ -47,6 +49,8 @@ public class PushController {
         User user = userRepository.findByUsername(username).get();
         Long userId = user.getId();
         PushStatus pushStatus = status.get("pushStatus");
+        log.info(status.get("pushStatus").toString());
+        log.info(pushStatus.toString());
 
         List<PushDetail> pushDetails = user.getPushDetails();
         for (PushDetail pushDetail : pushDetails) {
@@ -54,6 +58,8 @@ public class PushController {
             int seat = pushDetail.getSeat();
             pushService.updatePush(userId, pushStatus, sector, seat);
         }
+        user.setPushStatus(pushStatus);
+        userRepository.save(user);
 
         return status;
     }

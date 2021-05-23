@@ -5,6 +5,7 @@ import com.parkinglot.fcm.FcmUtil;
 import com.parkinglot.repository.ParkingRepository;
 import com.parkinglot.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import java.util.Map;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class PushService {
     private final ParkingRepository parkingRepository;
     private final ParkingService parkingService;
@@ -85,8 +87,6 @@ public class PushService {
             parkingService.updateDisableDeviceToken(parking.getId(), seat, deviceToken, platform);
         }
 
-        user.setPushStatus(pushStatus);
-        userRepository.save(user);
     }
 
     //유저 아이디로 찾아서 푸쉬 삭제
@@ -105,8 +105,6 @@ public class PushService {
             parkingService.deleteDisableDeviceToken(parking.getId(), seat, deviceToken);
         }
 
-        user.setPushStatus(pushStatus);
-        userRepository.save(user);
     }
 
     //유저 이름으로 찾아서 푸쉬 업데이트
@@ -128,8 +126,6 @@ public class PushService {
             parkingService.updateDisableDeviceToken(parking.getId(), seat, deviceToken, platform);
         }
 
-        user.setPushStatus(pushStatus);
-        userRepository.save(user);
     }
 
     //유저 이름으로 찾아서 푸쉬 삭제
@@ -148,8 +144,6 @@ public class PushService {
             parkingService.deleteDisableDeviceToken(parking.getId(), seat, deviceToken);
         }
 
-        user.setPushStatus(pushStatus);
-        userRepository.save(user);
     }
 
     //자리가 비었을 때 (enable) 푸쉬보내기
