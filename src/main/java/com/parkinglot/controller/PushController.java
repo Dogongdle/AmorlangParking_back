@@ -1,67 +1,128 @@
 package com.parkinglot.controller;
 
-import com.parkinglot.domain.Response;
+import com.parkinglot.domain.PushDetail;
+import com.parkinglot.domain.PushStatus;
 import com.parkinglot.domain.User;
-import com.parkinglot.dto.UserDto;
+import com.parkinglot.dto.PushDto;
+import com.parkinglot.fcm.FcmUtil;
+import com.parkinglot.repository.PushDetailRepository;
 import com.parkinglot.repository.UserRepository;
-import com.parkinglot.service.JwtUserDetailsService;
-import com.parkinglot.token.JwtRequest;
-import com.parkinglot.token.JwtResponse;
+import com.parkinglot.service.PushService;
 import com.parkinglot.token.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-public class SignUpController {
+public class PushController {
 
-    private final JwtUserDetailsService userService;
     private final UserRepository userRepository;
-    private final JwtUserDetailsService userDetailsService;
+    private final PushDetailRepository pushDetailRepository;
+    private final PushService pushService;
     private final JwtTokenUtil jwtTokenUtil;
 
-    // 회원가입
-    @PostMapping("/signup")
-    public Response signup(@RequestBody UserDto infoDto) { // 회원 추가
+    @GetMapping("/push/status")
+    public Map<String, PushStatus> pushStatus(@RequestHeader("authorization") String jwt){
 
-        Response response = new Response();
+        jwt = jwt.substring(7);
+        String username = jwtTokenUtil.getUsernameFromToken(jwt);
+        User user = userRepository.findByUsername(username).get();
+        PushStatus pushStatus = user.getPushStatus();
+        Map<String, PushStatus> send = new HashMap<>();
+        send.put("pushStatus", pushStatus);
 
-        if(!userRepository.existsByServiceId(infoDto.getServiceId())){
-            userService.save(infoDto);  // db에 저장
-            response.setResponse("signin");
-            response.setMessage("회원가입을 성공적으로 완료했습니다.");
-        } else {
-            response.setResponse("signup");
-            response.setMessage("이미 가입된 회원입니다.");
+        return send;
+    }
+
+    @PostMapping("/push/status")
+    public Map<String, PushStatus> updateStatus(@RequestHeader("authorization") String jwt,
+                                                @RequestBody Map<String, PushStatus> status){
+        jwt = jwt.substring(7);
+        String username = jwtTokenUtil.getUsernameFromToken(jwt);
+        User user = userRepository.findByUsername(username).get();
+        Long userId = user.getId();
+        PushStatus pushStatus = status.get("pushStatus");
+
+        List<PushDetail> pushDetails = user.getPushDetails();
+        for (PushDetail pushDetail : pushDetails) {
+            String sector = pushDetail.getSector();
+            int seat = pushDetail.getSeat();
+            pushService.updatePush(userId, pushStatus, sector, seat);
         }
-        return response;
+
+        return status;
     }
 
-    // 로그인
-    @PostMapping("/signin")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest jwtRequest) throws Exception {
+    @GetMapping("/push")
+    public List<PushDto> pushDetails(@RequestHeader("authorization") String jwt){
 
-        final String token = getString(jwtRequest);
-        User user = userRepository.findByUsername(jwtRequest.getUsername()).get();
-        user.setDeviceToken(jwtRequest.getDeviceToken());
-        user.setPlatform(jwtRequest.getPlatform());
-        userRepository.save(user);
+        jwt = jwt.substring(7);
+        String username = jwtTokenUtil.getUsernameFromToken(jwt);
+        User user = userRepository.findByUsername(username).get();
+        List<PushDetail> pushDetails = user.getPushDetails();
+        List<PushDto> pushDtoList = new ArrayList<>();
+        for (PushDetail pushDetail : pushDetails) {
+            PushDto pushDto = new PushDto();
+            pushDto.setSector(pushDetail.getSector());
+            pushDto.setSeat(pushDetail.getSeat());
+            pushDtoList.add(pushDto);
+        }
 
-        return ResponseEntity.ok(new JwtResponse(token));
-
+        return pushDtoList;
     }
 
-    //JWT 토큰 생성 메서드
-    private String getString(JwtRequest jwtRequest) {
-        final UserDetails userDetails = userDetailsService
-                .loadUserByUsername(jwtRequest.getUsername());
+    @PostMapping("/push")
+    public PushDto updateDetail(@RequestHeader("authorization") String jwt,
+                                @RequestBody PushDto pushDto){
+        jwt = jwt.substring(7);
+        String username = jwtTokenUtil.getUsernameFromToken(jwt);
+        User user = userRepository.findByUsername(username).get();
 
-        final String token = jwtTokenUtil.generateToken(userDetails);
-        return token;
+        //현재 유저가 같은 알람을 등록했는지 확인하고 익셉션을 날리는 부분
+        List<PushDetail> allByUser = pushDetailRepository.findAllByUser(user);
+        for (PushDetail pushDetail : allByUser) {
+            if(pushDetail.getSector() == pushDto.getSector()){
+                if(pushDetail.getSeat() == pushDto.getSeat()){
+                    throw new IllegalStateException("중복된 좌석에 알람을 등록했습니다.");
+                }
+            }
+        }
+
+        PushDetail newPush = new PushDetail();
+        newPush.setSector(pushDto.getSector());
+        newPush.setSeat(pushDto.getSeat());
+        newPush.setUser(user);
+        pushService.updatePush(user.getId(), user.getPushStatus(), newPush.getSector(), newPush.getSeat());
+        pushDetailRepository.save(newPush);
+
+        return pushDto;
+    }
+
+    @PostMapping("/push/delete")
+    public PushDto deleteDetail(@RequestHeader("authorization") String jwt,
+                                @RequestBody PushDto pushDto){
+        jwt = jwt.substring(7);
+        String username = jwtTokenUtil.getUsernameFromToken(jwt);
+        User user = userRepository.findByUsername(username).get();
+
+        //현재 유저가 등록한 알람중에 있으면 삭제
+        //없으면 익셉션을 날리는 부분
+        List<PushDetail> allByUser = pushDetailRepository.findAllByUser(user);
+        for (PushDetail pushDetail : allByUser) {
+            if(pushDetail.getSector() == pushDto.getSector()){
+                if(pushDetail.getSeat() == pushDto.getSeat()){
+                    pushService.deletePush(user.getId(), user.getPushStatus(), pushDto.getSector(), pushDto.getSeat());
+                    pushDetailRepository.delete(pushDetail);
+                    return pushDto;
+                }
+            }
+        }
+        throw new IllegalStateException("삭제하려는 알람이 등록되어있지 않습니다.");
     }
 
 }
