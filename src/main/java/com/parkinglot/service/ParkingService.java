@@ -31,6 +31,20 @@ public class ParkingService {
         return seat.get(seatNumber);
     }
 
+    public boolean updateArduinoSeatTrue(Long parkingId, int seatNumber){
+        ParkingSeat parkingSeat = repository.get(parkingId);
+        Map<Integer, Boolean> seat = parkingSeat.getSeat();
+        seat.put(seatNumber, true);
+        return seat.get(seatNumber);
+    }
+
+    public boolean updateArduinoSeatFalse(Long parkingId, int seatNumber){
+        ParkingSeat parkingSeat = repository.get(parkingId);
+        Map<Integer, Boolean> seat = parkingSeat.getSeat();
+        seat.put(seatNumber, false);
+        return seat.get(seatNumber);
+    }
+
     public Map<Integer, Boolean> getSeats(Long parkingId) {
         ParkingSeat parkingSeat = repository.get(parkingId);
         return parkingSeat.getSeat();
