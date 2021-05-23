@@ -6,9 +6,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity(name="users")
 @Getter @Setter
@@ -21,25 +19,30 @@ public class User implements UserDetails {
 
     private Long serviceId;
 
-    @Column(name = "username", unique = true)
+    @Column(unique = true)
     private String username;
-
-    @Column(name = "email", unique = true)
-    private String email;
-
-    private String apart;
-
-    private String phoneNumber;
-
-    private String carNumber;
-
-    private String bio;
-
-    @Column(name = "password")
     private String password;
 
-    @Column(name = "provider")
+    private String apart;
+    private String phoneNumber;
+
+    //어떤 소셜로그인 (구글, 카카오 등)인지 저장하는 필드
     private String provider;
+
+    //푸쉬알람을 위한 디바이스토큰 필드
+    private String deviceToken;
+
+    //푸쉬알람을 위한 IOS, ANDROID 등의 플랫폼을 저장하는 enum 필드
+    @Enumerated(EnumType.STRING)
+    private Platform platform;
+
+    //푸쉬알람이 항상가는지 자리가 비었을때나 찼을때만 가는지 설정하는 enum 필드
+    @Enumerated(EnumType.STRING)
+    private PushStatus pushStatus = PushStatus.BOTH;
+
+    //푸쉬설정을 저장한 엔티티와 일대다 매핑
+    @OneToMany(mappedBy = "user")
+    private List<PushDetail> pushDetails = new ArrayList<>();
 
 
 
