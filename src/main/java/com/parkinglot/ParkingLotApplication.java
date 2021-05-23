@@ -3,8 +3,10 @@ package com.parkinglot;
 import com.parkinglot.domain.Parking;
 import com.parkinglot.repository.ParkingRepository;
 import com.parkinglot.service.ParkingService;
+
 import com.parkinglot.service.PushService;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -18,9 +20,10 @@ import java.util.stream.Stream;
 public class ParkingLotApplication {
 
 	//주차장의 초기 값들을 설정하기 위한 리포지토리 선언
+
 	private final ParkingService parkingService;
 	private final PushService pushService;
-
+	
 	//메인 메서드가 돌아가기전에 초기값 설정하는 메서드
 	@PostConstruct
 	public void init(){
@@ -35,12 +38,14 @@ public class ParkingLotApplication {
 		).collect(Collectors.toList());
 		parkingRepository.saveAll(parkings);
 		*/
+
+
 		for(Long j = 1L; j<5L; j++) {
 			parkingService.generateSeat(j);
 			for (int i = 1; i < 16; i++) {
 				parkingService.saveSeat(j,i,true);
 
-			}
+      }
 			for (int i = 1; i < 6; i++) {
 
 				parkingService.saveDoubleSeat(j,i,true);
@@ -60,8 +65,11 @@ public class ParkingLotApplication {
 
 		}
 
+
 		//서버 시작할때 푸쉬 한번에 설정하기
 		pushService.setPush();
+
+
 	}
 
 	public static void main(String[] args) {

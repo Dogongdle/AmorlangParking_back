@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ApartController {
 
-
     @PostMapping("/verify")
     public Response verifyCode(@RequestBody ApartDto apart){
 
