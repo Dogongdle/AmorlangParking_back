@@ -3,6 +3,7 @@ package com.parkinglot.domain;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,4 +18,8 @@ public class ParkingSeat {
     //자리가 비었을 때 (Enable 일 때) 맵과 자리가 찼을 때 (Disable 일 때) 맵으로 구분
     private Map<Integer, Map<String, Platform>> onEnableDeviceTokens = new HashMap<>();
     private Map<Integer, Map<String, Platform>> onDisableDeviceTokens = new HashMap<>();
+
+    private Map<Integer, LocalDateTime> reservationEndTime = new HashMap<>();
+    private Map<Integer, String> reservedUser = new HashMap<>();
+
 }

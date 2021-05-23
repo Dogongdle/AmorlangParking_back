@@ -6,11 +6,13 @@ import com.parkinglot.repository.ParkingRepository;
 import com.parkinglot.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class PushService {
     private final ParkingRepository parkingRepository;
@@ -23,39 +25,41 @@ public class PushService {
         List<User> allUser = userRepository.findAll();
         for (User user : allUser) {
             if(user.getDeviceToken() != null){
-                String deviceToken = user.getDeviceToken();
-                Platform platform = user.getPlatform();
-                PushStatus pushStatus = user.getPushStatus();
-
                 List<PushDetail> pushDetails = user.getPushDetails();
 
-                if(pushStatus == PushStatus.ENABLE_ONLY) {
-                    for (PushDetail pushDetail : pushDetails) {
-                        String sector = pushDetail.getSector();
-                        Parking parking = parkingRepository.findBySector(sector).get();
-                        Long parkingId = parking.getId();
-                        int seat = pushDetail.getSeat();
+                if(!pushDetails.isEmpty()) {
+                    String deviceToken = user.getDeviceToken();
+                    Platform platform = user.getPlatform();
+                    PushStatus pushStatus = user.getPushStatus();
 
-                        parkingService.updateEnableDeviceToken(parkingId, seat, deviceToken, platform);
-                    }
-                } else if(pushStatus == PushStatus.DISABLE_ONLY) {
-                    for (PushDetail pushDetail : pushDetails) {
-                        String sector = pushDetail.getSector();
-                        Parking parking = parkingRepository.findBySector(sector).get();
-                        Long parkingId = parking.getId();
-                        int seat = pushDetail.getSeat();
+                    if (pushStatus == PushStatus.ENABLE_ONLY) {
+                        for (PushDetail pushDetail : pushDetails) {
+                            String sector = pushDetail.getSector();
+                            Parking parking = parkingRepository.findBySector(sector).get();
+                            Long parkingId = parking.getId();
+                            int seat = pushDetail.getSeat();
 
-                        parkingService.updateDisableDeviceToken(parkingId, seat, deviceToken, platform);
-                    }
-                } else {        //pushStatus.BOTH 일때
-                    for (PushDetail pushDetail : pushDetails) {
-                        String sector = pushDetail.getSector();
-                        Parking parking = parkingRepository.findBySector(sector).get();
-                        Long parkingId = parking.getId();
-                        int seat = pushDetail.getSeat();
+                            parkingService.updateEnableDeviceToken(parkingId, seat, deviceToken, platform);
+                        }
+                    } else if (pushStatus == PushStatus.DISABLE_ONLY) {
+                        for (PushDetail pushDetail : pushDetails) {
+                            String sector = pushDetail.getSector();
+                            Parking parking = parkingRepository.findBySector(sector).get();
+                            Long parkingId = parking.getId();
+                            int seat = pushDetail.getSeat();
 
-                        parkingService.updateEnableDeviceToken(parkingId, seat, deviceToken, platform);
-                        parkingService.updateDisableDeviceToken(parkingId, seat, deviceToken, platform);
+                            parkingService.updateDisableDeviceToken(parkingId, seat, deviceToken, platform);
+                        }
+                    } else {        //pushStatus.BOTH 일때
+                        for (PushDetail pushDetail : pushDetails) {
+                            String sector = pushDetail.getSector();
+                            Parking parking = parkingRepository.findBySector(sector).get();
+                            Long parkingId = parking.getId();
+                            int seat = pushDetail.getSeat();
+
+                            parkingService.updateEnableDeviceToken(parkingId, seat, deviceToken, platform);
+                            parkingService.updateDisableDeviceToken(parkingId, seat, deviceToken, platform);
+                        }
                     }
                 }
             }

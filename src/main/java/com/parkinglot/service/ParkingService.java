@@ -4,6 +4,7 @@ import com.parkinglot.domain.ParkingSeat;
 import com.parkinglot.domain.Platform;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +24,10 @@ public class ParkingService {
         ParkingSeat parkingSeat = repository.get(parkingId);
         Map<Integer, Boolean> seat = parkingSeat.getSeat();
         seat.put(seatNumber, bool);
+        Map<Integer, LocalDateTime> reservationEndTime = parkingSeat.getReservationEndTime();
+        reservationEndTime.put(seatNumber, LocalDateTime.now());
+        Map<Integer, String> reservedUser = parkingSeat.getReservedUser();
+        reservedUser.put(seatNumber, null);
 
         //디바이스 토큰을 위한 맵 초기화 하기
         //주차자리마다 디바이스 토큰이 필요하므로(일대일매칭) 주차자리를 초기화할때 같이 초기화한다.
@@ -118,4 +123,21 @@ public class ParkingService {
     }
     //---------------------[ 끝 ] 푸쉬를위한 디바이스 토큰 메소드들---------------------
 
+    public void reserve(Long parkingId,String username, int seatNumber){
+        ParkingSeat parkingSeat=repository.get(parkingId);
+        Map<Integer, LocalDateTime> reservationEndTime = parkingSeat.getReservationEndTime();
+        reservationEndTime.put(seatNumber,LocalDateTime.now().plusMinutes(5));
+        Map<Integer, String> reservedUser = parkingSeat.getReservedUser();
+        reservedUser.put(seatNumber, username);
+    }
+
+    public Map<Integer, LocalDateTime> getReservationEndTime(Long parkingId){
+        ParkingSeat parkingSeat = repository.get(parkingId);
+        return parkingSeat.getReservationEndTime();
+    }
+
+    public Map<Integer, String> getReservedUser(Long parkingId){
+        ParkingSeat parkingSeat = repository.get(parkingId);
+        return parkingSeat.getReservedUser();
+    }
 }

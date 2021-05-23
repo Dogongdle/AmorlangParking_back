@@ -41,7 +41,7 @@ public class User implements UserDetails {
     private PushStatus pushStatus = PushStatus.BOTH;
 
     //푸쉬설정을 저장한 엔티티와 일대다 매핑
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<PushDetail> pushDetails = new ArrayList<>();
 
 

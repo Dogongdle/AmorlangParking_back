@@ -1,7 +1,6 @@
 package com.parkinglot.controller;
 
 import com.parkinglot.domain.Parking;
-
 import com.parkinglot.dto.ArduinoDto;
 import com.parkinglot.repository.ParkingRepository;
 import com.parkinglot.service.ParkingService;
