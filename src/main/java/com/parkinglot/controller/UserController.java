@@ -30,6 +30,7 @@ public class UserController {
             userApart.setUsername(username);
             userApart.setApart(user.get().getApart());
             userApart.setProvider(user.get().getProvider());
+            userApart.setReserved(user.get().isReserved());
         }
 
         return userApart;

@@ -22,6 +22,7 @@ public class ParkingController {
     private final JwtTokenUtil jwtTokenUtil;
     private final ParkingService parkingService;
     private final ParkingRepository parkingRepository;
+    private final UserRepository userRepository;
 
     // a~d 섹터별 데이터 추가
     @GetMapping("/data/{sector}")
@@ -50,7 +51,17 @@ public class ParkingController {
             if(reservedUser.get(i+1) != null) {
                 parkingDto.setReserved(endTime.isAfter(LocalDateTime.now()));
                 if (reservedUser.get(i+1).equals(username)) {
-                    parkingDto.setReservedUser(true);
+                    if(endTime.isAfter(LocalDateTime.now())) {
+                        parkingDto.setReservedUser(true);
+                        User user = userRepository.findByUsername(username).get();
+                        user.setReserved(true);
+                        userRepository.save(user);
+                    } else {
+                        User user = userRepository.findByUsername(username).get();
+                        user.setReserved(false);
+                        userRepository.save(user);
+                        reservedUser.remove(i+1, username);
+                    }
                 }
             }else {
                 parkingDto.setReserved(false);

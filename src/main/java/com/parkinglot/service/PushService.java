@@ -52,7 +52,7 @@ public class PushService {
 
                             parkingService.updateDisableDeviceToken(parkingId, seat, deviceToken, platform);
                         }
-                    } else {        //pushStatus.BOTH 일때
+                    } else if (pushStatus == PushStatus.BOTH) {        //pushStatus.BOTH 일때
                         for (PushDetail pushDetail : pushDetails) {
                             String sector = pushDetail.getSector();
                             Parking parking = parkingRepository.findBySector(sector).get();
@@ -82,9 +82,12 @@ public class PushService {
         }else if (pushStatus == PushStatus.DISABLE_ONLY) {
             parkingService.updateDisableDeviceToken(parking.getId(), seat, deviceToken, platform);
             parkingService.deleteEnableDeviceToken(parking.getId(), seat, deviceToken);
-        }else {
+        }else if (pushStatus == PushStatus.BOTH) {
             parkingService.updateEnableDeviceToken(parking.getId(), seat, deviceToken, platform);
             parkingService.updateDisableDeviceToken(parking.getId(), seat, deviceToken, platform);
+        }else {
+            parkingService.deleteEnableDeviceToken(parking.getId(), seat, deviceToken);
+            parkingService.deleteDisableDeviceToken(parking.getId(), seat, deviceToken);
         }
 
     }
@@ -100,7 +103,7 @@ public class PushService {
             parkingService.deleteEnableDeviceToken(parking.getId(), seat, deviceToken);
         }else if (pushStatus == PushStatus.DISABLE_ONLY) {
             parkingService.deleteDisableDeviceToken(parking.getId(), seat, deviceToken);
-        }else {
+        }else if (pushStatus == PushStatus.BOTH) {
             parkingService.deleteEnableDeviceToken(parking.getId(), seat, deviceToken);
             parkingService.deleteDisableDeviceToken(parking.getId(), seat, deviceToken);
         }
@@ -121,9 +124,12 @@ public class PushService {
         }else if (pushStatus == PushStatus.DISABLE_ONLY) {
             parkingService.updateDisableDeviceToken(parking.getId(), seat, deviceToken, platform);
             parkingService.deleteEnableDeviceToken(parking.getId(), seat, deviceToken);
-        }else {
+        }else if (pushStatus == PushStatus.BOTH) {
             parkingService.updateEnableDeviceToken(parking.getId(), seat, deviceToken, platform);
             parkingService.updateDisableDeviceToken(parking.getId(), seat, deviceToken, platform);
+        }else {
+            parkingService.deleteEnableDeviceToken(parking.getId(), seat, deviceToken);
+            parkingService.deleteDisableDeviceToken(parking.getId(), seat, deviceToken);
         }
 
     }
@@ -139,7 +145,7 @@ public class PushService {
             parkingService.deleteEnableDeviceToken(parking.getId(), seat, deviceToken);
         }else if (pushStatus == PushStatus.DISABLE_ONLY) {
             parkingService.deleteDisableDeviceToken(parking.getId(), seat, deviceToken);
-        }else {
+        }else if (pushStatus == PushStatus.BOTH) {
             parkingService.deleteEnableDeviceToken(parking.getId(), seat, deviceToken);
             parkingService.deleteDisableDeviceToken(parking.getId(), seat, deviceToken);
         }

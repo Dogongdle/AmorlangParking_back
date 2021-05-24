@@ -29,13 +29,13 @@ public class ParkingLotApplication {
 		//디비에 계속 쌓이면서 에러가 터진다.
 
 
-		List<Parking> parkings = Stream.of(
+		/*List<Parking> parkings = Stream.of(
 				new Parking(null,"a"),
 				new Parking(null,"b"),
 				new Parking(null,"c"),
 				new Parking(null,"d")
 		).collect(Collectors.toList());
-		parkingRepository.saveAll(parkings);
+		parkingRepository.saveAll(parkings);*/
 
 
 

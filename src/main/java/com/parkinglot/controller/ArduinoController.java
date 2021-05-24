@@ -26,7 +26,7 @@ public class ArduinoController {
 
         Parking parking = parkingRepository.findBySector(sector).get();
         Long parkingId = parking.getId();
-        parkingService.updateSeat(parkingId, seat);
+
         Map<Integer, Boolean> seatMap = parkingService.getSeats(parkingId);
         if(seatMap.get(seat) != enable) {
             if (enable) {
