@@ -40,4 +40,27 @@ public class ArduinoController {
 
         return "Not changed status";
     }
+
+    @PostMapping("/parking-double")
+    public String updateParkingDoubleSeat(@RequestBody ArduinoDto arduinoDto){
+        String sector = arduinoDto.getSector();
+        int seat = arduinoDto.getNumber();
+        boolean enable = arduinoDto.isEnable();
+
+        Parking parking = parkingRepository.findBySector(sector).get();
+        Long parkingId = parking.getId();
+
+        Map<Integer, Boolean> seatMap = parkingService.getDoubleSeats(parkingId);
+        if(seatMap.get(seat) != enable) {
+            if (enable) {
+                pushService.sendEnablePush(sector, seat);
+            } else {
+                pushService.sendDisablePush(sector, seat);
+            }
+            parkingService.updateDoubleSeat(parkingId, seat);
+            return "Changed status";
+        }
+
+        return "Not changed status";
+    }
 }
