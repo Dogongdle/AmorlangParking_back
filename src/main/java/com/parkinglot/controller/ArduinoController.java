@@ -52,11 +52,6 @@ public class ArduinoController {
 
         Map<Integer, Boolean> seatMap = parkingService.getDoubleSeats(parkingId);
         if(seatMap.get(seat) != enable) {
-            if (enable) {
-                pushService.sendEnablePush(sector, seat);
-            } else {
-                pushService.sendDisablePush(sector, seat);
-            }
             parkingService.updateDoubleSeat(parkingId, seat);
             return "Changed status";
         }

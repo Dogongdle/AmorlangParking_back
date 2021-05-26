@@ -39,14 +39,12 @@ public class ParkingLotApplication {
 
 
 
-		for(Long j = 1L; j<5L; j++) {
+		for(Long j = 1L; j<10L; j++) {
 			parkingService.generateSeat(j);
 			for (int i = 1; i < 16; i++) {
 				parkingService.saveSeat(j,i,true);
-
 			}
 			for (int i = 1; i < 6; i++) {
-
 				parkingService.saveDoubleSeat(j,i,true);
 			}
 			parkingService.updateSeat(j,1);
@@ -61,7 +59,6 @@ public class ParkingLotApplication {
 			parkingService.updateDoubleSeat(j,1);
 			parkingService.updateDoubleSeat(j,2);
 			parkingService.updateDoubleSeat(j,3);
-
 		}
 
 		//서버 시작할때 푸쉬 한번에 설정하기
