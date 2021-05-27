@@ -92,7 +92,7 @@ public class PushController {
         //현재 유저가 같은 알람을 등록했는지 확인하고 익셉션을 날리는 부분
         List<PushDetail> allByUser = pushDetailRepository.findAllByUser(user);
         for (PushDetail pushDetail : allByUser) {
-            if(pushDetail.getSector() == pushDto.getSector()){
+            if(pushDetail.getSector().equals(pushDto.getSector())){
                 if(pushDetail.getSeat() == pushDto.getSeat()){
                     throw new IllegalStateException("중복된 좌석에 알람을 등록했습니다.");
                 }
@@ -120,7 +120,7 @@ public class PushController {
         //없으면 익셉션을 날리는 부분
         List<PushDetail> allByUser = pushDetailRepository.findAllByUser(user);
         for (PushDetail pushDetail : allByUser) {
-            if(pushDetail.getSector() == pushDto.getSector()){
+            if(pushDetail.getSector().equals(pushDto.getSector())){
                 if(pushDetail.getSeat() == pushDto.getSeat()){
                     pushService.deletePush(user.getId(), user.getPushStatus(), pushDto.getSector(), pushDto.getSeat());
                     pushDetailRepository.delete(pushDetail);
