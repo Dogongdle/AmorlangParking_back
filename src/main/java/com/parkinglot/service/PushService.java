@@ -154,25 +154,33 @@ public class PushService {
 
     //자리가 비었을 때 (enable) 푸쉬보내기
     public void sendEnablePush(String sector, int seat){
+        log.debug("----------[START] PushService - sendEnablePush----------");
         String message = sector + "섹터의 " + seat + "번 자리가 비었습니다.";
         Parking parking = parkingRepository.findBySector(sector).get();
         Map<String, Platform> deviceTokenMap = parkingService.getEnableDeviceTokenMap(parking.getId(), seat);
+        log.debug("디바이스 토큰 맵 목록 : {}",deviceTokenMap);
+        log.debug("맵이 비었는가? : {}",deviceTokenMap.isEmpty());
 
         for (String deviceToken : deviceTokenMap.keySet()) {
             Platform platform = deviceTokenMap.get(deviceToken);
             fcmUtil.sendFcm(deviceToken, "아몰랑파킹 주차알림", message, platform);
         }
+        log.debug("----------[END] PushService - sendEnablePush----------");
     }
 
     //자리가 찼을 떄 (disable) 푸쉬보내기
     public void sendDisablePush(String sector, int seat){
+        log.debug("----------[START] PushService - sendDisablePush----------");
         String message = sector + "섹터의 " + seat + "번 자리가 찼습니다.";
         Parking parking = parkingRepository.findBySector(sector).get();
         Map<String, Platform> deviceTokenMap = parkingService.getDisableDeviceTokenMap(parking.getId(), seat);
+        log.debug("디바이스 토큰 맵 목록 : {}",deviceTokenMap);
+        log.debug("맵이 비었는가? : {}",deviceTokenMap.isEmpty());
 
         for (String deviceToken : deviceTokenMap.keySet()) {
             Platform platform = deviceTokenMap.get(deviceToken);
             fcmUtil.sendFcm(deviceToken, "아몰랑파킹 주차알림", message, platform);
         }
+        log.debug("----------[END] PushService - sendDisablePush----------");
     }
 }
