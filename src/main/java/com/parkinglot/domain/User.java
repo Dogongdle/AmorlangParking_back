@@ -21,6 +21,7 @@ public class User implements UserDetails {
 
     @Column(unique = true)
     private String username;
+    @Column(unique = true)
     private String password;
 
     private String apart;
@@ -46,6 +47,9 @@ public class User implements UserDetails {
     //푸쉬설정을 저장한 엔티티와 일대다 매핑
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<PushDetail> pushDetails = new ArrayList<>();
+
+    @OneToOne(mappedBy = "users")
+    private Apart apart_name;
 
 
 

@@ -28,23 +28,25 @@ public class ParkingLotApplication {
 		//처음 시작할때 딱한번만 실행하는 로직. 두번째 실행부터 이 로직이 실행되면 나중에 주차장정보 받아올때
 		//디비에 계속 쌓이면서 에러가 터진다.
 
-
-		/*List<Parking> parkings = Stream.of(
+/*
+		List<Parking> parkings = Stream.of(
 				new Parking(null,"a"),
 				new Parking(null,"b"),
 				new Parking(null,"c"),
 				new Parking(null,"d")
 		).collect(Collectors.toList());
-		parkingRepository.saveAll(parkings);*/
+		parkingRepository.saveAll(parkings);
+*/
 
 
-
-		for(Long j = 1L; j<10L; j++) {
+		for(Long j = 1L; j<5L; j++) {
 			parkingService.generateSeat(j);
 			for (int i = 1; i < 16; i++) {
 				parkingService.saveSeat(j,i,true);
+
 			}
 			for (int i = 1; i < 6; i++) {
+
 				parkingService.saveDoubleSeat(j,i,true);
 			}
 			parkingService.updateSeat(j,1);
@@ -59,6 +61,7 @@ public class ParkingLotApplication {
 			parkingService.updateDoubleSeat(j,1);
 			parkingService.updateDoubleSeat(j,2);
 			parkingService.updateDoubleSeat(j,3);
+
 		}
 
 		//서버 시작할때 푸쉬 한번에 설정하기

@@ -23,6 +23,10 @@ public class Apart {
     private String name;
     private String code;
 
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User users;
+
 //    @OneToMany(mappedBy = "apart", cascade = CascadeType.ALL)
 //    private List<Parking> parkings = new ArrayList<>();
 }
