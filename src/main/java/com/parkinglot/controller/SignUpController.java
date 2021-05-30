@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-// social signup, login에 대한 기능을 다루는 컨트롤러
+// 회원가입, Social Login에 대한 기능을 다루는 컨트롤러
 // jwt token을 생성하여 사용자를 인식하고, 이로부터 username을 받아 login을 한다.
 
 @RestController
