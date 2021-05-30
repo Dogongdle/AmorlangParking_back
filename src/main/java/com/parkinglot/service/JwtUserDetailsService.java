@@ -13,8 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
-// db에서 userdetails를 얻어와 AuthenticationManager에게 제공
-
+// DB에서 UserDetails에 대한 정보를 얻어와 이를 AuthenticationManager에게 제공
 
 @Service
 @RequiredArgsConstructor
