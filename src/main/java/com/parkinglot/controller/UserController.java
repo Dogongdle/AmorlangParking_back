@@ -19,7 +19,7 @@ public class UserController {
     private final JwtTokenUtil jwtTokenUtil;
     private final UserRepository userRepository;
 
-
+    // 사용자 정보
     @GetMapping("/user")
     public UserApart showUser(@RequestHeader("authorization") String jwt) {
         UserApart userApart = new UserApart();
@@ -36,6 +36,7 @@ public class UserController {
         return userApart;
     }
 
+    //사용자 정보 수정
     @PostMapping("/user")
     public void saveUser(@RequestHeader("authorization") String jwt,
                          @RequestBody UserApart userApart){

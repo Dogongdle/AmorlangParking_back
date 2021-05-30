@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+// 주차장과 관련된 API를 작업하는 컨트롤러로,
+// 데이터 추가, 데이터 변경에 대한 기능을 한다.
+
 @RestController
 @RequiredArgsConstructor
 public class ParkingController {
@@ -46,7 +49,7 @@ public class ParkingController {
         //5분예약
         for (int i = 0; i< list.size(); i++){
             ParkingDto parkingDto = list.get(i);    // 리스트는 0부터
-            LocalDateTime endTime = reservationEndTime.get(i+1);    // Map은 1부터(?)
+            LocalDateTime endTime = reservationEndTime.get(i+1);    // Map은 1부터 시작
 
             if(reservedUser.get(i+1) != null) {
                 parkingDto.setReserved(endTime.isAfter(LocalDateTime.now()));
@@ -116,6 +119,7 @@ public class ParkingController {
         return parkingDto;
     }
 
+    // 5분 예약에 대한 기능
     @PostMapping("/reserve/{sector}/{seat}")
     public ParkingDto fiveMinutes(@RequestHeader("authorization") String jwt,
                                   @PathVariable String sector,
