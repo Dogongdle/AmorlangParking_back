@@ -22,8 +22,6 @@ import io.jsonwebtoken.ExpiredJwtException;
 // 프론트에서 매순간 request를 할때마다 이 필터를 거침
 // 헤더에 담겨온 토큰정보가 유효한지 확인하고, 맞다면 요청사항 수행
 
-
-
 @Component
 @RequiredArgsConstructor
 public class JwtRequestFilter extends OncePerRequestFilter {
