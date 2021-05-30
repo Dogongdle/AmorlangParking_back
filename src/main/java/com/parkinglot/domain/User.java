@@ -21,6 +21,7 @@ public class User implements UserDetails {
 
     @Column(unique = true)
     private String username;
+    @Column(unique = true)
     private String password;
 
     private String apart;
@@ -40,9 +41,15 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private PushStatus pushStatus = PushStatus.BOTH;
 
+    //5분예약을 했는지 안했는지 여부를 저장하는 필드
+    private boolean reserved;
+
     //푸쉬설정을 저장한 엔티티와 일대다 매핑
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<PushDetail> pushDetails = new ArrayList<>();
+
+    @OneToOne(mappedBy = "users")
+    private Apart apart_name;
 
 
 

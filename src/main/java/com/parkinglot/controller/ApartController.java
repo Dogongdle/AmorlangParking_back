@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+// 아파트의 코드값을 인증하는 절차로 사용자의 apart name과 code값의 비교를 통해
+// 인증절차를 거치게 된다.
+
 @RestController
 public class ApartController {
 
