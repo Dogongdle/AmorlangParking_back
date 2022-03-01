@@ -19,7 +19,7 @@ Spring Boot, Spring Security, JPA
 
 <br>
 
-## Datbase 구조
+## Database 구조
 ![캡처](https://user-images.githubusercontent.com/51408349/156091992-2ed396be-e51d-4a20-8f2e-aa7978d4c6de.PNG)
 
 <br>
