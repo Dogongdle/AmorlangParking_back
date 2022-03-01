@@ -19,8 +19,9 @@ Spring Boot, Spring Security, JPA
 
 <br>
 
-## Database 구조
-![캡처](https://user-images.githubusercontent.com/51408349/156091992-2ed396be-e51d-4a20-8f2e-aa7978d4c6de.PNG)
+## ER DIAGRAM
+![ER_DIAGRAM](https://user-images.githubusercontent.com/51408349/156099197-72edf476-5127-43ea-8ffa-53f740a08fd2.jpg)
+
 
 <br>
 
@@ -31,6 +32,12 @@ Spring Boot, Spring Security, JPA
 
 ![image](https://user-images.githubusercontent.com/51408349/156092189-7e0cde12-3304-4771-8e7e-395d3f3dbea3.png)
 * **Firebase를 통한 푸쉬알림**
+
+<br>
+
+## API 명세서
+
+[API 명세서.docx](https://github.com/Dogongdle/AmorlangParking_back/files/8158551/API.docx)
 
 <br>
 
